@@ -22,7 +22,7 @@
 
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
-
+#include <stdlib.h>
 /* USER CODE END Includes */
 
 /* Private typedef -----------------------------------------------------------*/
@@ -54,10 +54,10 @@ static void MX_GPIO_Init(void);
 
 /* Private user code ---------------------------------------------------------*/
 /* USER CODE BEGIN 0 */
-uint32_t hex2int(char *hex);
 uint32_t checksum = 0;
 uint32_t o_checksum = 0;
-char hexa[] = "0x12345678";
+//char hexa[] = "0x12345678";
+char hexa[] = "0x102b84e";
 /* USER CODE END 0 */
 
 /**
@@ -93,8 +93,7 @@ int main(void)
   {
     checksum += *(uint8_t *)(0x8000000 + i);
   }
-
-  o_checksum = hex2int(hexa);
+  o_checksum = (uint32_t)strtol(hexa, NULL, 0);
   /* USER CODE END 2 */
 
   /* Infinite loop */
@@ -160,19 +159,7 @@ static void MX_GPIO_Init(void)
 }
 
 /* USER CODE BEGIN 4 */
-uint32_t hex2int(char *hex)
-{
-  uint32_t val = 0;
-  while (*hex)
-  {
-    uint8_t byte = *hex++;
-    if (byte >= '0' && byte <= '9') byte = byte - '0';
-    else if (byte >= 'a' && byte <='f') byte = byte - 'a' + 10;
-    else if (byte >= 'A' && byte <='F') byte = byte - 'A' + 10;
-    val = (val << 4) | (byte & 0xF);
-  }
-  return val;
-}
+
 /* USER CODE END 4 */
 
 /**
